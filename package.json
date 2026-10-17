@@ -1,0 +1,131 @@
+{
+  "$schema": "https://www.raycast.com/schemas/extension.json",
+  "name": "omniroute-raycast",
+  "title": "OmniRoute",
+  "description": "Chat with your OmniRoute combos through a local opencode agent — tools, MCP servers and skills included.",
+  "icon": "icon.png",
+  "author": "miloszzajac",
+  "license": "MIT",
+  "categories": ["Developer Tools", "Productivity"],
+  "commands": [
+    {
+      "name": "ask",
+      "title": "Ask OmniRoute",
+      "subtitle": "OmniRoute",
+      "description": "Ask any OmniRoute combo. Streams the answer, runs tools, MCP servers and skills through opencode.",
+      "mode": "view"
+    },
+    {
+      "name": "chats",
+      "title": "Chats",
+      "subtitle": "OmniRoute",
+      "description": "Browse and continue previous opencode sessions.",
+      "mode": "view"
+    },
+    {
+      "name": "models",
+      "title": "Models & Combos",
+      "subtitle": "OmniRoute",
+      "description": "Pick the combo used by default, pin favourites and check tool support.",
+      "mode": "view"
+    },
+    {
+      "name": "mcp",
+      "title": "MCP Servers",
+      "subtitle": "OmniRoute",
+      "description": "Enable, disable, add and remove MCP servers that give the agent extra powers.",
+      "mode": "view"
+    },
+    {
+      "name": "skills",
+      "title": "Skills",
+      "subtitle": "OmniRoute",
+      "description": "Inspect opencode skills and attach them to the next chat.",
+      "mode": "view"
+    },
+    {
+      "name": "settings",
+      "title": "Settings & Health",
+      "subtitle": "OmniRoute",
+      "description": "opencode service status, SearXNG, permissions and a live combo test.",
+      "mode": "view"
+    }
+  ],
+  "preferences": [
+    {
+      "name": "defaultCombo",
+      "title": "Default combo",
+      "description": "OmniRoute combo used for new chats (exact combo name).",
+      "type": "textfield",
+      "required": false,
+      "default": "Free Stack",
+      "placeholder": "Free Stack"
+    },
+    {
+      "name": "defaultAgent",
+      "title": "Default agent",
+      "description": "opencode agent that handles the chat. Lean sends ~10k tokens per message, full agents ~55k (whole skill catalog).",
+      "type": "dropdown",
+      "required": false,
+      "default": "raycast",
+      "data": [
+        { "title": "raycast — lean, skill catalog off (~10k ctx)", "value": "raycast" },
+        { "title": "build — full tools + skills (~55k ctx)", "value": "build" },
+        { "title": "general — everything allowed", "value": "general" },
+        { "title": "plan — read only, no edits", "value": "plan" }
+      ]
+    },
+    {
+      "name": "workingDirectory",
+      "title": "Working directory",
+      "description": "Directory the agent works in (file tools, git, bash).",
+      "type": "textfield",
+      "required": false,
+      "default": "~/Documents"
+    },
+    {
+      "name": "permissionMode",
+      "title": "Permissions",
+      "description": "How much the agent may do without asking.",
+      "type": "dropdown",
+      "required": false,
+      "default": "guarded",
+      "data": [
+        { "title": "Guarded — ask before shell and file writes", "value": "guarded" },
+        { "title": "Unrestricted — allow everything", "value": "open" },
+        { "title": "Read-only — never shell, never write", "value": "readonly" }
+      ]
+    },
+    {
+      "name": "systemPreamble",
+      "title": "Extra instruction",
+      "description": "Optional line appended to every chat (e.g. \"Answer in Polish, be brief\").",
+      "type": "textfield",
+      "required": false,
+      "default": ""
+    }
+  ],
+  "dependencies": {
+    "@raycast/api": "^2.8.2",
+    "@raycast/utils": "^2.3.2",
+    "react": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "22.19.17",
+    "@types/react": "19.0.10",
+    "typescript": "^5.9.2"
+  },
+  "scripts": {
+    "build": "ray build -e dist",
+    "dev": "ray develop",
+    "lint": "ray lint",
+    "fix": "ray lint --fix",
+    "icon": "node scripts/make-icon.mjs",
+    "service:install": "bash scripts/install-service.sh",
+    "service:uninstall": "bash scripts/install-service.sh --uninstall",
+    "search:up": "cd searxng && docker compose up -d",
+    "search:down": "cd searxng && docker compose down",
+    "mcp:selftest": "cd mcp-searxng && node selftest.mjs",
+    "smoke": "esbuild tests/smoke.ts --bundle --platform=node --format=esm --outfile=tests/smoke.mjs --external:@raycast/api && node tests/smoke.mjs"
+  }
+}

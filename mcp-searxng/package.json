@@ -1,0 +1,13 @@
+{
+  "name": "mcp-searxng",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Dependency-free MCP server exposing a self-hosted SearXNG as web_search and web_fetch tools.",
+  "type": "module",
+  "bin": { "mcp-searxng": "./index.mjs" },
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "start": "node index.mjs",
+    "selftest": "node selftest.mjs"
+  }
+}

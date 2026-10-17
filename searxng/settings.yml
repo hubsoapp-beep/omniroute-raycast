@@ -1,0 +1,36 @@
+# SearXNG for OmniRoute Raycast — JSON API enabled, local only.
+use_default_settings: true
+
+general:
+  instance_name: "OmniRoute Search"
+  donation_url: false
+  contact_url: false
+
+server:
+  # overridden at runtime by SEARXNG_SECRET env var; kept for manual runs
+  secret_key: "omniroute-raycast-local-secret"
+  limiter: false
+  public_instance: false
+  image_proxy: true
+  method: "GET"
+  http_protocol_version: "1.1"
+
+search:
+  safe_search: 0
+  autocomplete: ""
+  default_lang: "auto"
+  formats:
+    - html
+    - json
+  max_page: 3
+
+ui:
+  static_use_hash: true
+  default_locale: "pl"
+  query_in_title: false
+  infinite_scroll: false
+
+outgoing:
+  request_timeout: 6.0
+  max_request_timeout: 12.0
+  pool_connections: 100
